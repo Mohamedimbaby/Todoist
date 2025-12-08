@@ -1,0 +1,133 @@
+workflows:
+  tasktime-workflow:
+    name: TaskTime CI/CD
+    max_build_duration: 60
+    instance_type: mac_mini_m1
+    
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      groups:
+        - todoist_credentials # Contains TODOIST_TEST_TOKEN
+      vars:
+        COVERAGE_THRESHOLD: 90
+    
+    triggering:
+      events:
+        - push
+        - pull_request
+      branch_patterns:
+        - pattern: main
+          include: true
+        - pattern: develop
+          include: true
+        - pattern: feature/*
+          include: true
+    
+    scripts:
+      - name: Set up local properties
+        script: |
+          echo "flutter.sdk=$HOME/programs/flutter" > android/local.properties
+      
+      - name: Get Flutter packages
+        script: |
+          flutter pub get
+      
+      - name: Generate code
+        script: |
+          flutter pub run build_runner build --delete-conflicting-outputs
+      
+      - name: Run static analysis
+        script: |
+          flutter analyze --no-fatal-infos
+      
+      - name: Run tests with coverage
+        script: |
+          flutter test --coverage --reporter expanded
+      
+      - name: Check coverage threshold
+        script: |
+          # Install lcov if not present
+          if ! command -v lcov &> /dev/null; then
+            brew install lcov
+          fi
+          
+          # Generate coverage report
+          genhtml coverage/lcov.info -o coverage/html
+          
+          # Calculate coverage percentage
+          COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep "lines" | cut -d ' ' -f 4 | cut -d '%' -f 1)
+          
+          echo "Current coverage: $COVERAGE%"
+          echo "Required threshold: $COVERAGE_THRESHOLD%"
+          
+          # Check if coverage meets threshold
+          if (( $(echo "$COVERAGE < $COVERAGE_THRESHOLD" | bc -l) )); then
+            echo "Coverage $COVERAGE% is below threshold $COVERAGE_THRESHOLD%"
+            exit 1
+          fi
+          
+          echo "Coverage check passed!"
+      
+      - name: Build Android APK
+        script: |
+          flutter build apk --release
+      
+      - name: Build iOS IPA
+        script: |
+          flutter build ios --release --no-codesign
+    
+    artifacts:
+      - build/**/outputs/**/*.apk
+      - build/**/outputs/**/*.aab
+      - build/ios/ipa/*.ipa
+      - coverage/html/**
+      - coverage/lcov.info
+    
+    publishing:
+      email:
+        recipients:
+          - developer@tasktime.app
+        notify:
+          success: true
+          failure: true
+
+  # Development workflow with relaxed coverage
+  tasktime-dev:
+    name: TaskTime Dev Build
+    max_build_duration: 30
+    instance_type: mac_mini_m1
+    
+    environment:
+      flutter: stable
+      xcode: latest
+    
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: feature/*
+          include: true
+        - pattern: bugfix/*
+          include: true
+    
+    scripts:
+      - name: Get packages
+        script: flutter pub get
+      
+      - name: Generate code
+        script: flutter pub run build_runner build --delete-conflicting-outputs
+      
+      - name: Analyze
+        script: flutter analyze --no-fatal-infos
+      
+      - name: Test
+        script: flutter test
+      
+      - name: Build debug APK
+        script: flutter build apk --debug
+    
+    artifacts:
+      - build/**/outputs/**/*.apk
+
