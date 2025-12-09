@@ -264,10 +264,8 @@ Strict separation between:
 
 - [ ] Additional themes
 - [ ] More languages
-- [ ] Calendar export
-- [ ] Push reminders
-- [ ] Task attachments
 - [ ] Team collaboration
+- [ ] CICD with code magic  ## file ready to be integrated
 
 ---
 
