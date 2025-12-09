@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="additionalArgs" value="--dart-define=TODOIST_TOKEN=7a516a6996a5c35b0b5a65561f3c01583eb2bd52" />
+    <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+    <method v="2" />
+  </configuration>
+</component>

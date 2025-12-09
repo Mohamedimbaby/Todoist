@@ -559,6 +559,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid Todoist token'**
   String get invalidToken;
+
+  /// No description provided for @enterProjectName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter project name'**
+  String get enterProjectName;
 }
 
 class _AppLocalizationsDelegate

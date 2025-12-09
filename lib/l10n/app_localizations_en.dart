@@ -239,4 +239,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invalidToken => 'Invalid Todoist token';
+
+  @override
+  String get enterProjectName => 'Enter project name';
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tasktime/core/extensions/localization_extension.dart';
 import '../../cubits/project/project_cubit.dart';
 
 /// Dialog for creating a new Todoist project
@@ -24,12 +25,12 @@ class _AddProjectDialogState extends State<AddProjectDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('New Project'),
+      title:  Text(context.localization.newProject),
       content: TextField(
         controller: _controller,
-        decoration: const InputDecoration(
-          labelText: 'Project Name',
-          hintText: 'Enter project name',
+        decoration:  InputDecoration(
+          labelText:context.localization.projectName,
+          hintText: context.localization.enterProjectName,
         ),
         autofocus: true,
         enabled: !_isLoading,
@@ -37,7 +38,7 @@ class _AddProjectDialogState extends State<AddProjectDialog> {
       actions: [
         TextButton(
           onPressed: _isLoading ? null : () => context.pop(),
-          child: const Text('Cancel'),
+          child:  Text(context.localization.cancel),
         ),
         ElevatedButton(
           onPressed: _isLoading ? null : _createProject,
@@ -47,7 +48,7 @@ class _AddProjectDialogState extends State<AddProjectDialog> {
                   height: 20,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : const Text('Create'),
+              :  Text(context.localization.create),
         ),
       ],
     );

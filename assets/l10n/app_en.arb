@@ -77,5 +77,8 @@
   "noInternet": "No internet connection",
   "serverError": "Server error",
   "invalidToken": "Invalid Todoist token",
+  "newProject": "New Project",
+  "projectName": "Project Name",
+  "enterProjectName": "Enter project name",
   "priority": "Priority"
 }

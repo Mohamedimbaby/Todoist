@@ -76,5 +76,8 @@
     "noInternet": "Keine Internetverbindung",
     "serverError": "Serverfehler",
     "invalidToken": "Ungültiger Todoist-Token",
-  "priority": "Priorität"
+    "newProject": "Neues Projekt",
+   "projectName": "Projektname",
+   "enterProjectName": "Projektnamen eingeben",
+   "priority": "Priorität"
 }

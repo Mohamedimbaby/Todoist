@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tasktime/l10n/app_localizations.dart';
+import 'package:tasktime/presentation/cubits/sync/sync_cubit.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/config/app_config.dart';
@@ -45,6 +46,8 @@ class TaskTimeApp extends StatelessWidget {
           create: (_) => ProjectCubit(
             secureStorage: getIt<SecureStorageProvider>(),
           ),
+        ),BlocProvider(
+          create: (_) => getIt<SyncCubit>()
         ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
