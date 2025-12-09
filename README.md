@@ -262,10 +262,17 @@ Strict separation between:
 
 ## Roadmap
 
-- [ ] Additional themes
-- [ ] More languages
-- [ ] Team collaboration
-- [ ] CICD with code magic  ## file ready to be integrated
+- [x] Additional themes
+- [x] More languages
+- [x] Team collaboration
+- [x] Add Projects
+- [x] Add Tasks
+- [x] Move Tasks to any status
+- [x] Timers
+- [x] History
+- [x] Comments add/delete
+- [x] Offline first for all APIs
+- [x] CICD with code magic  -> file ready to be integrated
 
 ---
 
