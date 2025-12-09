@@ -54,14 +54,6 @@ class ProjectCubit extends Cubit<ProjectState> {
     }
   }
 
-  /// Clear selected project
-  void clearSelection() {
-    final current = state;
-    if (current is ProjectLoaded) {
-      emit(ProjectLoaded(projects: current.projects));
-    }
-  }
-
   /// Create a new project
   Future<void> createProject(String name) async {
     if (_apiProvider == null) return;
